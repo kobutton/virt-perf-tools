@@ -1,0 +1,11 @@
+# OCP < 4.16 uses RHEL 8 
+#FROM registry.redhat.io/openshift4/ose-tools-rhel8:v<major>.<minor>
+
+## OCP 4.16 + uses rhel 9
+FROM registry.redhat.io/openshift4/ose-tools-rhel9:v4.17
+
+#RUN dnf install -y trace-cmd gcc kernel-tools && dnf clean all# Used for compiling CPU perf issues
+COPY collectl-4.3.10-1.el9.noarch.rpm /tmp/
+RUN dnf install -y /tmp/collectl-4.3.10-1.el9.noarch.rpm  
+COPY entrypoint.sh /root/
+CMD ["/root/entrypoint.sh"]
